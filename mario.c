@@ -13,7 +13,7 @@ int main(void)
 
     int row, column;  // declares int variables to count through loops
 
-    for(row=0;row<=height;row++)  // loops through each row of the pattern
+    for(row=1;row<=height;row++)  // loops through each row of the pattern
     {
         for(column=0;column<height;column++)  // prints a character for each column on the left half
         {
