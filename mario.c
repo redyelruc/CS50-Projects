@@ -4,7 +4,7 @@
 
 int main(void)
 {
-    int height= 0;  
+    int height = 0;  
     // declares an int variable called height
     do    
     //runs a loop to ensure that the user input is above zero and below 9
