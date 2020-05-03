@@ -28,7 +28,7 @@ int main(void)
 
         }
 
-        printf(" "); //prints the space between the two sides
+        printf("  "); //prints the space between the two sides
 
         for(column=0;column<row;column++)    // prints a character for each column on the right half
         {
