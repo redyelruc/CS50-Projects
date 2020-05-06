@@ -41,6 +41,7 @@ string find_card_type(int length, long number_to_check)
     //declare an array to keep the digits in
     int digits[length];
     int digit = 0;
+    int second_digit = 0;
     int i=0;
     while(number_to_check != 0)
     {
@@ -50,6 +51,7 @@ string find_card_type(int length, long number_to_check)
         digits[i] = digit;
         i++;
     }
+    second_digit = digits[length-2];
     
     //declare an array for the digits whiich have been multiplied
     int multiplied[8];
