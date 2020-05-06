@@ -14,7 +14,7 @@ int main(void)
     // count how many characters in the card number
     int digits = count_digits(number);
     // check what type of card we have
-    printf("%s",find_card_type(digits, number));
+    printf("%s\n",find_card_type(digits, number));
 
 }
 
@@ -93,6 +93,10 @@ string find_card_type(int length, long number_to_check)
             {
                 return "VISA";
         
+            }
+            else if (length == 16 && digit ==5)
+            {
+                return "MASTERCARD";
             }
             else
             {
