@@ -87,7 +87,7 @@ string find_card_type(int length, long number_to_check)
     if ((multiplied_sum + not_multiplied) %10 == 0)
         {
             //check length of input and first digit to assign type of card    
-            if (length == 15 && digit ==  3)
+            if (length == 15 && digit ==  3 && (second_digit == 4 || second_digit == 7))
             {
                 return "AMEX";
             }
@@ -96,7 +96,7 @@ string find_card_type(int length, long number_to_check)
                 return "VISA";
         
             }
-            else if (length == 16 && digit ==5)
+            else if (length == 16 && digit ==5 && (second_digit >0 && second_digit <6))
             {
                 return "MASTERCARD";
             }
