@@ -30,10 +30,6 @@ int main(void)
         }
     }
     words++;
-    printf ("%d letter(s)\n", letters);
-    printf ("%d word(s)\n", words);
-    printf ("%d sentence(s)\n", sentences);
-    
     letters_per_hundred = 100 * (float)letters/words;
     sentences_per_hundred = 100 * (float)sentences/words;
     cole_liau = 0.0588 * letters_per_hundred - 0.296 * sentences_per_hundred - 15.8;
