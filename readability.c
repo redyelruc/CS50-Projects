@@ -36,11 +36,11 @@ int main(void)
     cole_liau = round(cole_liau);
     if (cole_liau < 1)
     {
-    	printf ("Before grade 1\n");
+    	printf ("Before Grade 1\n");
     }
     else if (cole_liau > 16)
     {
-    	printf ("Greater than grade 16+\n");
+    	printf ("Grade 16+\n");
     }
     else
     {
