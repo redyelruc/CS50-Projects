@@ -151,7 +151,7 @@ void tabulate(void)
         {
             if (!candidates[preferences[i][j]].eliminated)
             {
-                candidates[preferences[i][j]].votes +=1;
+                candidates[preferences[i][j]].votes += 1;
                 j = candidate_count;
             }
         }
@@ -184,7 +184,7 @@ bool print_winner(void)
         }
     }
     // check if only one winner and tally is above 50%
-    if (number_of_winners == 1 && max_votes > voter_count/2)
+    if (number_of_winners == 1 && max_votes > voter_count / 2)
     {
         printf("%s\n", winner);
         return true;
