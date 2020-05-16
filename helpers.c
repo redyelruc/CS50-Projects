@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <math.h>
+#include <getopt.h>
+#include <stdlib.h>
 #include "helpers.h"
 
 // Convert image to grayscale
@@ -46,16 +48,17 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
+    RGBTRIPLE(*image1)[width] = calloc(height, width * sizeof(RGBTRIPLE));
     for (int row = 0; row < height; row++)
     {
         for (int column = 0; column < width; column ++)
         {
-            int new_blue = image[row][column].rgbtRed;
-            int new_red = image[row][column].rgbtBlue;
-            image[row][column].rgbtBlue = new_blue;
-            image[row][column].rgbtRed = new_red;
+            image1[row][column] = image[row][width - column];
+
         }
     }
+    image = image1;
+    free (image1);
     return;
 }
 
