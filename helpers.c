@@ -40,12 +40,22 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
             image[row][column].rgbtRed = (int)round(sepia_red);
         }
     }
-    return;return;
+    return;
 }
 
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
+    for (int row = 0; row < height; row++)
+    {
+        for (int column = 0; column < width; column ++)
+        {
+            int new_blue = image[row][column].rgbtRed;
+            int new_red = image[row][column].rgbtBlue;
+            image[row][column].rgbtBlue = new_blue;
+            image[row][column].rgbtRed = new_red;
+        }
+    }
     return;
 }
 
