@@ -51,13 +51,13 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
     
     for (int row = 0; row < height; row++)
     {
-        RGBTRIPLE *b = malloc(width * sizeof(RGBTRIPLE));
-        for (int column = 0; column < width / 2; column ++)
+        RGBTRIPLE *b = malloc(width *sizeof(RGBTRIPLE));
+        for (int column = 0; column < width; column ++)
         {
-            b[column].rgbtGreen = image[row][width - column].rgbtGreen;
-            b[column].rgbtBlue = image[row][width - column].rgbtRed;
-            b[column].rgbtRed = image[row][width - column].rgbtBlue;
-            image[row][width - column] = image[row][column];
+            b[column] = image[row][width - column];
+        }
+        for (int column = 0; column < width; column ++)
+        {
             image[row][column] = b[column];
         }
         free(b);
