@@ -48,18 +48,19 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
-    RGBTRIPLE(*image1)[width] = calloc(height, width * sizeof(RGBTRIPLE));
+    RGBTRIPLE *b = malloc(width * sizeof(RGBTRIPLE));
     for (int row = 0; row < height; row++)
     {
-        for (int column = 0; column < width; column ++)
+        for (int column = 0; column < width / 2; column ++)
         {
-            image1[row][column].rgbtGreen = image[height - row][width - column].rgbtGreen;
-            image1[row][column].rgbtBlue = image[height - row][width - column].rgbtRed;
-            image1[row][column].rgbtRed = image[height - row][width - column].rgbtBlue;
+            b[column].rgbtGreen = image[row][width - column].rgbtGreen;
+            b[column].rgbtBlue = image[row][width - column].rgbtRed;
+            b[column].rgbtRed = image[row][width - column].rgbtBlue;
+            image[row][width - column] = image[row][column];
+            image[row][column] = b[column];
         }
     }
-    image = image1;
-    free (image1);
+    free(b);
     return;
 }
 
