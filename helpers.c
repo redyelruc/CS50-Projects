@@ -54,7 +54,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
         RGBTRIPLE *b = malloc(width *sizeof(RGBTRIPLE));
         for (int column = 0; column < width; column ++)
         {
-            b[column] = image[row][width - column];
+            b[column] = image[row][width - 1 - (column)];
         }
         for (int column = 0; column < width; column ++)
         {
