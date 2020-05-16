@@ -53,8 +53,9 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int column = 0; column < width; column ++)
         {
-            image1[row][column] = image[row][width - column];
-
+            image1[row][column].rgbtGreen = image[height - row][width - column].rgbtGreen;
+            image1[row][column].rgbtBlue = image[height - row][width - column].rgbtRed;
+            image1[row][column].rgbtRed = image[height - row][width - column].rgbtBlue;
         }
     }
     image = image1;
