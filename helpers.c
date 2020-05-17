@@ -11,8 +11,10 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int column = 0; column < width; column ++)
         {
+            //calculate the average
             float average = (float)(image[row][column].rgbtBlue + image[row][column].rgbtGreen + image[row][column].rgbtRed) / 3;
             int rounded_average = (int)round(average);
+            // make sure all three colours have the average amount
             image[row][column].rgbtBlue = rounded_average;
             image[row][column].rgbtGreen = rounded_average;
             image[row][column].rgbtRed = rounded_average;
@@ -28,9 +30,11 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int column = 0; column < width; column ++)
         {
+            //apply the calculations to make the colour sepia
             float sepia_red = .393 * image[row][column].rgbtRed + .769 * image[row][column].rgbtGreen + .189 * image[row][column].rgbtBlue;
             float sepia_green = .349 * image[row][column].rgbtRed + .686 * image[row][column].rgbtGreen + .168 * image[row][column].rgbtBlue;
             float sepia_blue = .272 * image[row][column].rgbtRed + .534 * image[row][column].rgbtGreen + .131 * image[row][column].rgbtBlue;
+            // make sure we don't go over max total
             if (sepia_red > 255)
             {
                 sepia_red = 255;
@@ -43,6 +47,7 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
             {
                 sepia_green = 255;
             }
+            // save to the image
             image[row][column].rgbtBlue = (int)round(sepia_blue);
             image[row][column].rgbtGreen = (int)round(sepia_green);
             image[row][column].rgbtRed = (int)round(sepia_red);
@@ -57,11 +62,14 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 
     for (int row = 0; row < height; row++)
     {
+        //make a new single line space in memory
         RGBTRIPLE *b = malloc(width * sizeof(RGBTRIPLE));
         for (int column = 0; column < width; column ++)
         {
+            //new image pixel = pixel from other end of column
             b[column] = image[row][width - 1 - (column)];
         }
+        //copy back to original image
         for (int column = 0; column < width; column ++)
         {
             image[row][column] = b[column];
