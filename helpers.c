@@ -48,7 +48,7 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
-    
+
     for (int row = 0; row < height; row++)
     {
         RGBTRIPLE *b = malloc(width *sizeof(RGBTRIPLE));
@@ -68,5 +68,46 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
+    int average_blue, average_green, average_red;
+    float total_blue, total_red, total_green;
+    int pixels_used;
+    RGBTRIPLE a[height][width];
+    for (int row = 0; row < height; row++)
+    {
+        for (int column = 0; column < width; column ++)
+        {
+            pixels_used = 0;
+            total_blue = 0;
+            total_red = 0;
+            total_green = 0;
+            for (int y = row - 1; y <= row + 1; y++)
+            {
+                for (int x = column - 1; x <= column + 1; x++)
+                {
+                    if (y >= 0 && y <= height - 1 && x >= 0 && x <= width - 1)
+                    {
+                        total_blue += image[y][x].rgbtBlue;
+                        total_red += image[y][x].rgbtRed;
+                        total_green += image[y][x].rgbtGreen;
+                        pixels_used += 1;
+                    }
+                }
+            }
+            average_blue = (int)round(total_blue/pixels_used);
+            average_green = (int)round(total_green/pixels_used);
+            average_red = (int)round(total_red/pixels_used);
+            // printf("pixel [%i][%i]: %i, %i, %i,", row, column, average_blue, average_green, average_red);
+            a[row][column].rgbtBlue = average_blue;
+            a[row][column].rgbtRed = average_red;
+            a[row][column].rgbtGreen = average_green;
+        }
+    }
+    for (int row = 0; row < height; row++)
+    {
+        for (int column = 0; column < width; column ++)
+        {
+            image[row][column] = a[row][column];
+        }
+    }
     return;
 }
