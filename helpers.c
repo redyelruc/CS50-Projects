@@ -11,7 +11,7 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int column = 0; column < width; column ++)
         {
-            float average = (float)(image[row][column].rgbtBlue + image[row][column].rgbtGreen + image[row][column].rgbtRed)/3;
+            float average = (float)(image[row][column].rgbtBlue + image[row][column].rgbtGreen + image[row][column].rgbtRed) / 3;
             int rounded_average = (int)round(average);
             image[row][column].rgbtBlue = rounded_average;
             image[row][column].rgbtGreen = rounded_average;
@@ -32,11 +32,17 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
             float sepia_green = .349 * image[row][column].rgbtRed + .686 * image[row][column].rgbtGreen + .168 * image[row][column].rgbtBlue;
             float sepia_blue = .272 * image[row][column].rgbtRed + .534 * image[row][column].rgbtGreen + .131 * image[row][column].rgbtBlue;
             if (sepia_red > 255)
+            {
                 sepia_red = 255;
+            }
             if (sepia_blue > 255)
+            {
                 sepia_blue = 255;
+            }
             if (sepia_green >255)
+            {
                 sepia_green = 255;
+            }
             image[row][column].rgbtBlue = (int)round(sepia_blue);
             image[row][column].rgbtGreen = (int)round(sepia_green);
             image[row][column].rgbtRed = (int)round(sepia_red);
@@ -68,7 +74,6 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    int average_blue, average_green, average_red;
     float total_blue, total_red, total_green;
     int pixels_used;
     RGBTRIPLE a[height][width];
@@ -93,15 +98,12 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     }
                 }
             }
-            average_blue = (int)round(total_blue/pixels_used);
-            average_green = (int)round(total_green/pixels_used);
-            average_red = (int)round(total_red/pixels_used);
-            // printf("pixel [%i][%i]: %i, %i, %i,", row, column, average_blue, average_green, average_red);
-            a[row][column].rgbtBlue = average_blue;
-            a[row][column].rgbtRed = average_red;
-            a[row][column].rgbtGreen = average_green;
+            a[row][column].rgbtBlue = (int)round(total_blue / pixels_used);
+            a[row][column].rgbtRed = (int)round(total_green / pixels_used);
+            a[row][column].rgbtGreen = (int)round(total_red / pixels_used);
         }
     }
+    // copy the newly blurred file to the original image file
     for (int row = 0; row < height; row++)
     {
         for (int column = 0; column < width; column ++)
