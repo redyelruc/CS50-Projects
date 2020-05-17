@@ -39,7 +39,7 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
             {
                 sepia_blue = 255;
             }
-            if (sepia_green >255)
+            if (sepia_green > 255)
             {
                 sepia_green = 255;
             }
@@ -57,7 +57,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 
     for (int row = 0; row < height; row++)
     {
-        RGBTRIPLE *b = malloc(width *sizeof(RGBTRIPLE));
+        RGBTRIPLE *b = malloc(width * sizeof(RGBTRIPLE));
         for (int column = 0; column < width; column ++)
         {
             b[column] = image[row][width - 1 - (column)];
@@ -74,13 +74,16 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
+    // initialise the toal variables
     float total_blue, total_red, total_green;
     int pixels_used;
-    RGBTRIPLE a[height][width];
+    // make a new file for the blurred pic to be stored
+    RGBTRIPLE blurred_image[height][width];
     for (int row = 0; row < height; row++)
     {
         for (int column = 0; column < width; column ++)
         {
+            // reset before looping through the next pixel
             pixels_used = 0;
             total_blue = 0;
             total_red = 0;
@@ -89,18 +92,21 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             {
                 for (int x = column - 1; x <= column + 1; x++)
                 {
+                    //avoid all references outside of width and height
                     if (y >= 0 && y <= height - 1 && x >= 0 && x <= width - 1)
                     {
                         total_blue += image[y][x].rgbtBlue;
                         total_red += image[y][x].rgbtRed;
                         total_green += image[y][x].rgbtGreen;
+                        //count how many pixels used so you can use as a divisor for the average
                         pixels_used += 1;
                     }
                 }
             }
-            a[row][column].rgbtBlue = (int)round(total_blue / pixels_used);
-            a[row][column].rgbtRed = (int)round(total_red / pixels_used);
-            a[row][column].rgbtGreen =(int)round(total_green / pixels_used);
+            // populate the new image with the averages
+            blurred_image[row][column].rgbtBlue = (int)round(total_blue / pixels_used);
+            blurred_image[row][column].rgbtRed = (int)round(total_red / pixels_used);
+            blurred_image[row][column].rgbtGreen = (int)round(total_green / pixels_used);
         }
     }
     // copy the newly blurred file to the original image file
