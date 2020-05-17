@@ -99,8 +99,8 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 }
             }
             a[row][column].rgbtBlue = (int)round(total_blue / pixels_used);
-            a[row][column].rgbtRed = (int)round(total_green / pixels_used);
-            a[row][column].rgbtGreen = (int)round(total_red / pixels_used);
+            a[row][column].rgbtRed = (int)round(total_red / pixels_used);
+            a[row][column].rgbtGreen =(int)round(total_green / pixels_used);
         }
     }
     // copy the newly blurred file to the original image file
