@@ -9,7 +9,7 @@
 #include <ctype.h>
 #include "dictionary.h"
 
-// Represents a node in a hash table
+// designs a node with two parts - word and a pointer called next
 typedef struct node
 {
     char word[LENGTH + 1];
@@ -17,12 +17,11 @@ typedef struct node
 }
 node;
 
+// define the size of the hashtable
 #define HASHTABLE_SIZE 65536
-
-// create array of pointer-to-nodes of size HASHTABLE_SIZE
 node* hashtable[HASHTABLE_SIZE];
 
-// global variables - dictionary size AND loaded dictionary
+// declare variables - dictionary size AND loaded dictionary
 unsigned int word_count = 0;
 bool loaded = false;
 
@@ -38,17 +37,15 @@ int get_hash(char* word)
 // check if word is in the dictionary
 bool check(const char* word)
 {
-    // create char array to store copy of word
+    // create char array to store copy of word so I can lowercase it
     int len = strlen(word);
     char word_copy[len + 1];
     
-    // convert word to lowercase
+    // make lowercase
     for (int i = 0; i < len; i++)
     {
        word_copy[i] = tolower(word[i]);
     }
-    
-    // add null terminator
     word_copy[len] = '\0';
     
     // get hash value 
@@ -60,6 +57,7 @@ bool check(const char* word)
     // check until the end of the linked list
     while (cursor != NULL)
     {
+        // if found
         if (strcmp(cursor->word, word_copy) == 0)
         {
             return true;
@@ -70,17 +68,18 @@ bool check(const char* word)
             cursor = cursor->next;
         }
     }
+    //if not found
     return false;
 }
 
 // load dictionary into hash table
 bool load(const char* dictionary)
 {
-    // make all hash table elements NULL
-    for (int i = 0; i < HASHTABLE_SIZE; i++)
-    {
-        hashtable[i] = NULL;
-    }
+    // // make all hash table elements NULL
+    // for (int i = 0; i < HASHTABLE_SIZE; i++)
+    // {
+    //     hashtable[i] = NULL;
+    // }
     
     // open dictionary
     FILE* dic_file = fopen(dictionary, "r");
