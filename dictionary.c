@@ -75,14 +75,11 @@ bool check(const char* word)
 // load dictionary into hash table
 bool load(const char* dictionary)
 {
-    // // make all hash table elements NULL
-    // for (int i = 0; i < HASHTABLE_SIZE; i++)
-    // {
-    //     hashtable[i] = NULL;
-    // }
-    
-    // open dictionary
+
+    // open the dictionary
     FILE* dic_file = fopen(dictionary, "r");
+    
+    // if it doesn't work
     if (dic_file == NULL)
     {
         printf("Error opening dictionary.\n");
@@ -106,15 +103,16 @@ bool load(const char* dictionary)
         //when end of file is reached
         if (feof(dic_file))
         {
+            //free the memory and exit loop
             free(new_node);
             break;
         }
-
+        //count the words
         word_count++;
         int h = get_hash(new_node->word);
         node* bucket = hashtable[h];
         
-        // if bucket is empty, insert the first node
+        // if bucket is empty, this is the first node
         if (bucket == NULL)
         {
             hashtable[h] = new_node;
@@ -138,9 +136,7 @@ unsigned int size(void)
 return word_count;
 }
 
-/**
- * Unloads dictionary from memory.  Returns true if successful else false.
- */
+// Unloaddictionary from memory
 bool unload(void)
 {
     for (int i = 0; i < HASHTABLE_SIZE; i++)
@@ -148,7 +144,7 @@ bool unload(void)
         node* cursor = hashtable[i];
         while (cursor != NULL)
         {
-            // maintain connection to linked list using temp
+            // don't leave the rest of the list floating in space
             node* temp = cursor;
             cursor = cursor->next;
             free(temp);
