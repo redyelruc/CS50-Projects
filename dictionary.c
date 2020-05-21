@@ -22,49 +22,39 @@ node;
 // create array of pointer-to-nodes of size HASHTABLE_SIZE
 node* hashtable[HASHTABLE_SIZE];
 
-// global variable for tracking dictionary size
+// global variables - dictionary size AND loaded dictionary
 unsigned int word_count = 0;
-
-// global boolean for tracking load/unload dictionary operations
 bool loaded = false;
 
-/**
- * Hash function via reddit user delipity:
- * https://www.reddit.com/r/cs50/comments/1x6vc8/pset6_trie_vs_hashtable/cf9nlkn
- */
-int hash_it(char* needs_hashing)
+// https://www.reddit.com/r/cs50/comments/1x6vc8/pset6_trie_vs_hashtable/cf9nlkn
+int get_hash(char* word)
 {
     unsigned int hash = 0;
-    for (int i=0, n=strlen(needs_hashing); i<n; i++)
-        hash = (hash << 2) ^ needs_hashing[i];
+    for (int i=0, n=strlen(word); i<n; i++)
+        hash = (hash << 2) ^ word[i];
     return hash % HASHTABLE_SIZE;
 }
 
-/**
- * Returns true if word is in dictionary else false. Case-insensitive.
- * Assume that check is only passed strings with alphabetical characters and/or
- * apostrophes.
- */
+// check if word is in the dictionary
 bool check(const char* word)
 {
     // create char array to store copy of word
-    // word is a const char* and non-read actions cannot be performed on it
     int len = strlen(word);
     char word_copy[len + 1];
     
-    // convert word to lowercase and store it in word_copy
+    // convert word to lowercase
     for (int i = 0; i < len; i++)
     {
        word_copy[i] = tolower(word[i]);
     }
     
-    // add null terminator to end of char array
+    // add null terminator
     word_copy[len] = '\0';
     
-    // get hash value (a.k.a. bucket)
-    int h = hash_it(word_copy);
+    // get hash value 
+    int h = get_hash(word_copy);
     
-    // assign cursor node to the first node of the bucket
+    // assign cursor node to  the bucket
     node* cursor = hashtable[h];
     
     // check until the end of the linked list
@@ -72,7 +62,6 @@ bool check(const char* word)
     {
         if (strcmp(cursor->word, word_copy) == 0)
         {
-            // word is in dictionary
             return true;
         }
         else
@@ -84,10 +73,7 @@ bool check(const char* word)
     return false;
 }
 
-/**
- * Loads dictionary into memory. Stores words in hash table. Returns true if
- * successful else false.
- */
+// load dictionary into hash table
 bool load(const char* dictionary)
 {
     // make all hash table elements NULL
@@ -97,73 +83,60 @@ bool load(const char* dictionary)
     }
     
     // open dictionary
-    FILE* fp = fopen(dictionary, "r");
-    if (fp == NULL)
+    FILE* dic_file = fopen(dictionary, "r");
+    if (dic_file == NULL)
     {
-        printf("Could not open dictionary.\n");
+        printf("Error opening dictionary.\n");
         return false;
     }
 
     while (true)
     {
-        // malloc a node for each new word
+        // get a space of memory for a new node
         node* new_node = malloc(sizeof(node));
         if (new_node == NULL)
         {
-            printf("Could not malloc a new node.\n");
+            printf("Not enough memory for new node.");
             return false;
         }
         
         // read a word from the dictionary and store it in new_node->word
-        fscanf(fp, "%s", new_node->word);
+        fscanf(dic_file, "%s", new_node->word);
         new_node->next = NULL;
         
-        if (feof(fp))
+        //when end of file is reached
+        if (feof(dic_file))
         {
-            // hit end of file
             free(new_node);
             break;
         }
 
         word_count++;
-        
-        // hashtable[h] is a pointer to a key-value pair
-        int h = hash_it(new_node->word);
-        node* head = hashtable[h];
+        int h = get_hash(new_node->word);
+        node* bucket = hashtable[h];
         
         // if bucket is empty, insert the first node
-        if (head == NULL)
+        if (bucket == NULL)
         {
             hashtable[h] = new_node;
         }
         // if bucket is not empty, attach node to front of list
-        // design choice: unsorted linked list to minimize load time rather
-        // than sorted linked list to minimize check time
         else
         {
             new_node->next = hashtable[h];
             hashtable[h] = new_node;
         }
     }
-    // close dictionary
-    fclose(fp);
     loaded = true;
-    return true;
+    // close dictionary
+    fclose(dic_file);
+    return loaded;
 }
 
-/**
- * Returns number of words in dictionary if loaded else 0 if not yet loaded.
- */
+//return number of words in dic
 unsigned int size(void)
 {
-    if (loaded)
-    {
-        return word_count;
-    }
-    else
-    {
-        return 0;
-    }
+return word_count;
 }
 
 /**
