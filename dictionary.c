@@ -19,23 +19,25 @@ node;
 
 // define the size of the hashtable
 #define HASHTABLE_SIZE 65536
-node* hashtable[HASHTABLE_SIZE];
+node *hashtable[HASHTABLE_SIZE];
 
 // declare variables - dictionary size AND loaded dictionary
 unsigned int word_count = 0;
 bool loaded = false;
 
 // https://www.reddit.com/r/cs50/comments/1x6vc8/pset6_trie_vs_hashtable/cf9nlkn
-int get_hash(char* word)
+int get_hash(char *word)
 {
     unsigned int hash = 0;
-    for (int i=0, n=strlen(word); i<n; i++)
+    for (int i = 0, n = strlen(word); i < n; i++)
+    {
         hash = (hash << 2) ^ word[i];
+    }
     return hash % HASHTABLE_SIZE;
 }
 
 // check if word is in the dictionary
-bool check(const char* word)
+bool check(const char *word)
 {
     // create char array to store copy of word so I can lowercase it
     int len = strlen(word);
@@ -44,7 +46,7 @@ bool check(const char* word)
     // make lowercase
     for (int i = 0; i < len; i++)
     {
-       word_copy[i] = tolower(word[i]);
+        word_copy[i] = tolower(word[i]);
     }
     word_copy[len] = '\0';
     
@@ -52,7 +54,7 @@ bool check(const char* word)
     int h = get_hash(word_copy);
     
     // assign cursor node to  the bucket
-    node* cursor = hashtable[h];
+    node *cursor = hashtable[h];
     
     // check until the end of the linked list
     while (cursor != NULL)
@@ -73,11 +75,11 @@ bool check(const char* word)
 }
 
 // load dictionary into hash table
-bool load(const char* dictionary)
+bool load(const char *dictionary)
 {
 
     // open the dictionary
-    FILE* dic_file = fopen(dictionary, "r");
+    FILE *dic_file = fopen(dictionary, "r");
     
     // if it doesn't work
     if (dic_file == NULL)
@@ -89,7 +91,7 @@ bool load(const char* dictionary)
     while (true)
     {
         // get a space of memory for a new node
-        node* new_node = malloc(sizeof(node));
+        node *new_node = malloc(sizeof(node));
         if (new_node == NULL)
         {
             printf("Not enough memory for new node.");
@@ -110,7 +112,7 @@ bool load(const char* dictionary)
         //count the words
         word_count++;
         int h = get_hash(new_node->word);
-        node* bucket = hashtable[h];
+        node *bucket = hashtable[h];
         
         // if bucket is empty, this is the first node
         if (bucket == NULL)
@@ -133,7 +135,7 @@ bool load(const char* dictionary)
 //return number of words in dic
 unsigned int size(void)
 {
-return word_count;
+    return word_count;
 }
 
 // Unloaddictionary from memory
@@ -141,11 +143,11 @@ bool unload(void)
 {
     for (int i = 0; i < HASHTABLE_SIZE; i++)
     {
-        node* cursor = hashtable[i];
+        node *cursor = hashtable[i];
         while (cursor != NULL)
         {
             // don't leave the rest of the list floating in space
-            node* temp = cursor;
+            node *temp = cursor;
             cursor = cursor->next;
             free(temp);
         }
