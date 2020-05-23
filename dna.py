@@ -56,5 +56,3 @@ for row in range(len(dna_list)):
     
 if not match:
     print("No match")
-    
-        
