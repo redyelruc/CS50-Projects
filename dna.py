@@ -32,7 +32,7 @@ for column in range(len(dna_list[0])):
         consequetives = 1
         starts_at += length_of_pattern
         # loop through rest of string
-        while starts_at < len(str_sequence):
+        while starts_at <= len(str_sequence):
             if str_sequence[starts_at:starts_at + length_of_pattern] == pattern:
                 consequetives += 1
                 starts_at += length_of_pattern
