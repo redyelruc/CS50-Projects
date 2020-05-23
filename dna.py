@@ -27,9 +27,10 @@ for column in range(len(dna_list[0])):
     record = 0
     # find dirst occurence
     starts_at = str_sequence.find(pattern)
-    #if found
+    # if found
     if starts_at != -1:
         consequetives = 1
+        record = 1
         starts_at += length_of_pattern
         # loop through rest of string
         while starts_at <= len(str_sequence):
