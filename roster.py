@@ -11,7 +11,7 @@ if len(argv) != 2:
 
 house_name = argv[1]
 db = SQL("sqlite:///students.db")
-dictionary = db.execute("SELECT first, middle, last, birth FROM students WHERE students.house = ?", house_name)
+dictionary = db.execute("SELECT first, middle, last, birth FROM students WHERE students.house = ? ORDER BY last", house_name)
 for row in range(len(dictionary)):
     print(dictionary[row]["first"], end = " ")
     if dictionary[row]["middle"] != "None":
