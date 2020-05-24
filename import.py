@@ -21,7 +21,7 @@ with open(argv[1]) as csv_file:
         if len(full_name.split()) == 2:
             first_name = full_name.split(' ', 1)[0]
             last_name = full_name.split(' ', 1)[1]
-            middle_name = ""
+            middle_name = None
         else:
             first_name = full_name.split(' ', 2)[0]
             middle_name = full_name.split(' ', 2)[1]
