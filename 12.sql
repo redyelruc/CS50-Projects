@@ -3,7 +3,7 @@
 SELECT a.title FROM 
 (SELECT title FROM movies m
 JOIN stars s ON m.id = s.movie_id 
-JOIN people p ON s.person_id = p.id 
+JOIN people p ON s.person_id = p.id) a 
 INNER JOIN
 (SELECT title FROM movies m
 JOIN stars s ON m.id = s.movie_id 
