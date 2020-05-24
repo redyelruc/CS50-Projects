@@ -20,13 +20,13 @@ with open(argv[1]) as csv_file:
         full_name = row["name"]
         if len(full_name.split()) == 2:
             first_name = full_name.split(' ', 1)[0]
-            last_name = full_name.split(' ',1)[1]
-            middle_name = "None"
+            last_name = full_name.split(' ', 1)[1]
+            middle_name = ""
         else:
             first_name = full_name.split(' ', 2)[0]
             middle_name = full_name.split(' ', 2)[1]
-            last_name = full_name.split(' ',2)[2]
+            last_name = full_name.split(' ', 2)[2]
         house = row["house"]
         birth = row["birth"]
         db.execute("INSERT INTO students (first, middle, last, house, birth) VALUES(?, ?, ?, ?, ?)",
-                               first_name, middle_name, last_name, house, birth)
+            first_name, middle_name, last_name, house, birth)

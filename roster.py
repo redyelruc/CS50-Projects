@@ -13,8 +13,8 @@ house_name = argv[1]
 db = SQL("sqlite:///students.db")
 dictionary = db.execute("SELECT first, middle, last, birth FROM students WHERE students.house = ? ORDER BY last", house_name)
 for row in range(len(dictionary)):
-    print(dictionary[row]["first"], end = " ")
-    if dictionary[row]["middle"] != "None":
-        print(dictionary[row]["middle"], end = " ")
+    print(dictionary[row]["first"], end=" ")
+    if dictionary[row]["middle"] != "":
+        print(dictionary[row]["middle"], end=" ")
     print(f"{dictionary[row]['last']}, born {dictionary[row]['birth']}")
 
