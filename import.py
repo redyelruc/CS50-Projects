@@ -29,4 +29,4 @@ with open(argv[1]) as csv_file:
         house = row["house"]
         birth = row["birth"]
         db.execute("INSERT INTO students (first, middle, last, house, birth) VALUES(?, ?, ?, ?, ?)",
-                    first_name, middle_name, last_name, house, birth)
+                  first_name, middle_name, last_name, house, birth)
