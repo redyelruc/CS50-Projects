@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell Stock
+{% endblock %}
+
+{% block main %}
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+
+          <th scope="col">Stock Symbol</th>
+          <th scope="col">Name of Company </th>
+          <th scope="col">Stock Price ($)</th>
+          <th scope="col">Number of Shares</th>
+          <th scope="col">Current Value ($)</th>
+
+        </tr>
+      </thead>
+      <tbody>
+    {% for row in stocks %}
+      <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>        
+        <td>{{ row[4] }}</td> 
+      </tr>
+    {% endfor %}
+      </tbody>
+    </table>
+
+      </tbody>
+    </table>
+    
+        <form action="/sell" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="stk_sym" placeholder="Stock Symbol" type="text">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="number_to_sell" placeholder="No. to Sell" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Sell Stock</button>
+    </form>
+
+
+{% endblock %}
