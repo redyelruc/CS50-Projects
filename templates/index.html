@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+
+Cash in Account = ${{cash}}
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+
+          <th scope="col">Stock Symbol</th>
+          <th scope="col">Name of Company </th>
+          <th scope="col">Stock Price ($)</th>
+          <th scope="col">Number of Shares</th>
+          <th scope="col">Current Value ($)</th>
+
+        </tr>
+      </thead>
+      <tbody>
+    {% for row in stocks %}
+      <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>        
+        <td>{{ row[4] }}</td> 
+      </tr>
+    {% endfor %}
+      </tbody>
+    </table>
+
+
+{% endblock %}
